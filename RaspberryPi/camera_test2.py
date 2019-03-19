@@ -3,6 +3,10 @@ import time
 import picamera
 import numpy as np
 
+import tensorflow
+from tensorflow.keras.model import load_model, load_weights
+
+model=load_model('./model.h5')
 
 
 with picamera.PiCamera() as camera:
