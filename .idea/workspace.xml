@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d6cc8f1-2c5e-42e8-aba7-45540d6a937d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RaspberryPi/camera_test_PC.py" afterDir="false" />
+    <list default="true" id="4d6cc8f1-2c5e-42e8-aba7-45540d6a937d" name="Default Changelist" comment="Updated">
+      <change afterPath="$PROJECT_DIR$/RaspberryPi/Camera_test_PC3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/labelEncodingFlickr.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/labelEncodingReal.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/model1/model.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/model1/trained_model.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/model1/weights.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/model2/model.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Modelling1-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Modelling1-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Flickr image scrape.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Flickr image scrape.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modelling1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Modelling1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saved_models/model1/model.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saved_models/model1/trained_model.h5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py" beforeDir="false" afterPath="$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fruit_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/fruit_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelEncoding.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/labelEncoding.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved_models/model2/weights.h5" beforeDir="false" afterPath="$PROJECT_DIR$/saved_models/model2/weights.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved_models/model3/weights.h5" beforeDir="false" afterPath="$PROJECT_DIR$/saved_models/model3/weights.h5" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +30,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
+            <state relative-caret-position="646">
               <caret line="46" selection-start-line="46" selection-end-line="46" />
               <folding>
                 <element signature="e#30#59#0" expanded="true" />
@@ -33,7 +42,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="68">
               <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -45,7 +54,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
+            <state relative-caret-position="391">
               <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="15" />
               <folding>
                 <element signature="e#181#199#0" expanded="true" />
@@ -66,14 +75,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+            <state relative-caret-position="986">
+              <caret line="68" column="43" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/RaspberryPi/Camera_test_PC3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="63" selection-start-line="17" selection-start-column="63" selection-end-line="17" selection-end-column="63" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fruit_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -97,7 +127,9 @@
         <option value="$PROJECT_DIR$/RaspberryPi/camera_test3.py" />
         <option value="$PROJECT_DIR$/RaspberryPi/camera_test.py" />
         <option value="$PROJECT_DIR$/RaspberryPi/camera_test_PC.py" />
+        <option value="$PROJECT_DIR$/fruit_data.py" />
         <option value="$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py" />
+        <option value="$PROJECT_DIR$/RaspberryPi/Camera_test_PC3.py" />
       </list>
     </option>
   </component>
@@ -111,12 +143,24 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Capstone" type="b2602c69:ProjectViewProjectNode" />
               <item name="Capstone" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Capstone" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Capstone" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Capstone" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Capstone" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="fruits" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Capstone" type="b2602c69:ProjectViewProjectNode" />
@@ -146,11 +190,16 @@
               <item name="saved_models" type="462c0819:PsiDirectoryNode" />
               <item name="model3" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Capstone" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Capstone" type="462c0819:PsiDirectoryNode" />
+              <item name="saved_models" type="462c0819:PsiDirectoryNode" />
+              <item name="model5" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -191,7 +240,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17377399" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17857143" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -213,6 +262,36 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="e#30#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="15" />
+          <folding>
+            <element signature="e#181#199#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test_PC.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
@@ -223,40 +302,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-          <folding>
-            <element signature="e#30#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RaspberryPi/camera_test3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="15" />
-          <folding>
-            <element signature="e#181#199#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RaspberryPi/Camera_test_PC2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        <state relative-caret-position="986">
+          <caret line="68" column="43" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fruit_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RaspberryPi/Camera_test_PC3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="63" selection-start-line="17" selection-start-column="63" selection-end-line="17" selection-end-column="63" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
