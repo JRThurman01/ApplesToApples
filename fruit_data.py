@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 from os import listdir
-import matplotlib.image as mpimg
+#import matplotlib.image as mpimg
+import cv2
 
 def filelist_from_directory(directory):
     '''
@@ -34,7 +35,7 @@ def create_dataset(filelist):
     # Takes the list created and bring back an array of 100x100x3 representing the picture
     photos = []
     for photo in filelist['Full filename']: #Column 1 is the directory 
-        im = mpimg.imread(photo)
+        im = cv2.imread(photo)
         photos.append(im)
 
     X = np.array(photos)
