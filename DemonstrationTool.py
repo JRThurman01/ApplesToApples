@@ -136,7 +136,7 @@ def getFileImages(id=1):
         url = './data/flickr/*/*.jpg'
     else:
         dataName='Flickr data subset'
-        url = './data/flickr/*/*.jpg'
+        url = './data/demonstration/*/*.jpg'
 
     return glob.glob(url, recursive=True), dataName
 
