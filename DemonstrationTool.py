@@ -12,6 +12,17 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Lambda, Dropout
 
+#Set up global variables
+IMAGEHEIGHT = 600
+SCOREBOXWIDTH = 500
+BARCHARTLENGTH = SCOREBOXWIDTH-50
+BARCHARTTHICKNESS = 30
+BARCHARTGAP = 25
+BARCHARTOFFSET = 8
+THRESHOLD=0.05
+FONT = cv2.FONT_HERSHEY_SIMPLEX
+
+
 def createModel(outputshape):
     featureVectorString = 'https://tfhub.dev/google/imagenet/mobilenet_v2_100_128/feature_vector/2'
     module = hub.Module(featureVectorString, trainable=False, name='featureVector')
@@ -59,18 +70,25 @@ def loadModel(modelNumber):
 
     elif modelNumber == 3:
         modelName = 'Model 3'
-        size = 9
+        size = 11
         model = createModel(size)
         model.load_weights('./saved_models/model7/weights.h5')
         return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
 
+    elif modelNumber == 4
+        modelName = 'Model 4'
+        size = 11
+        model = createModel(size)
+        model.load_weights('./saved_models/model8/weights.h5')
+        return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
+
 def drawProbabilities(predictions, frame, label):
 
-    #resize frame to have a width of 800
-    width = image_width
-    currentwidth = frame.shape[1]  # keep original width
-    ratio = width/currentwidth
-    height = int(frame.shape[0]*ratio)
+    #resize frame
+    height = IMAGEHEIGHT
+    currentheight = frame.shape[0]  # keep original height
+    ratio = height/currentheight
+    width = int(frame.shape[1]*ratio)
     dim = (width, height)
     frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
@@ -81,20 +99,20 @@ def drawProbabilities(predictions, frame, label):
     else:
         dataText=dataName
 
-    score_frame = 200*np.ones((height,width,3), np.uint8)
-    cv2.putText(score_frame, 'Model : {}' .format(modelName), (20,30), font, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(score_frame, 'Data source : {}'.format(dataText), (20, 60), font, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(score_frame, 'Image label : {}'.format(label), (20, 90), font, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
+    score_frame = 200*np.ones((IMAGEHEIGHT,SCOREBOXWIDTH,3), np.uint8)
+    cv2.putText(score_frame, 'Model : {}' .format(modelName), (20,30), FONT, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(score_frame, 'Data source : {}'.format(dataText), (20, 60), FONT, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(score_frame, 'Image label : {}'.format(label), (20, 90), FONT, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
 
     #get 4 highest predictions and labels
     argmaxes = np.argsort(predictions)[-4:]
     labels = labelEncoder.inverse_transform(argmaxes)
 
-    start_pixels = np.array([20, 120])
+    start_pixels = np.array([20, 150])
     for i in range(4):
         probability = predictions[argmaxes[-1-i]]
         probability = int(probability /0.05)*0.05 #rounding of the probability
-        if probability > threshold:
+        if probability > THRESHOLD:
             predictedLabel = labels[-1-i]
             if predictedLabel == label:
                 colour = (40, 230, 40)
@@ -102,15 +120,15 @@ def drawProbabilities(predictions, frame, label):
                 colour = (20,20,220)
 
             text = '{}. {} ({}%)' .format(i+1, predictedLabel, round(probability*100,0))
-            cv2.putText(score_frame ,text , tuple(start_pixels), font, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
-            chart_start = start_pixels + np.array([0, barchart_offset])
-            length = int(probability * barchart_fulllength)
+            cv2.putText(score_frame ,text , tuple(start_pixels), FONT, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
+            chart_start = start_pixels + np.array([0, BARCHARTOFFSET])
+            length = int(probability * BARCHARTLENGTH)
             chart_end = chart_start + np.array(
-                [length, barchart_thickness])
+                [length, BARCHARTTHICKNESS])
             cv2.rectangle(score_frame , tuple(chart_start), tuple(chart_end), colour, cv2.FILLED)
-        start_pixels = start_pixels + np.array([0, barchart_gap+barchart_thickness+barchart_offset])
+        start_pixels = start_pixels + np.array([0, BARCHARTGAP+BARCHARTTHICKNESS+BARCHARTOFFSET])
 
-    return np.hstack((frame, score_frame))
+    return np.hstack((score_frame, frame))
 
 def getImage(liveMode):
     if liveMode:
@@ -144,16 +162,8 @@ def getFileImages(id=1):
 #Set up camera and graphing tools
 print('Setting up imaging')
 cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 100)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 100)
-
-image_width = 600
-barchart_fulllength=int(image_width-50)
-barchart_thickness = 30
-barchart_gap = 25
-barchart_offset = 8
-threshold=0.05
-font = cv2.FONT_HERSHEY_SIMPLEX
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
 
 #Load the model, start with number 1.
 liveMode = False
@@ -178,29 +188,40 @@ while(True):
     # Display the resulting frame
     cv2.imshow('frame', frame)
     waitkey = cv2.waitKey(1) & 0xFF
-    if waitkey  == ord('q'):
-        break
-    elif waitkey  == ord('l'):
-        print('change mode')
-        liveMode = not liveMode
-    elif waitkey == ord('1'):
-        print('change model')
-        model, labelEncoder, modelName = loadModel(1)
-    elif waitkey == ord('2'):
-        print('change model')
-        model, labelEncoder, modelName = loadModel(2)
-    elif waitkey == ord('3'):
-        print('change model')
-        model, labelEncoder, modelName = loadModel(3)
-    elif waitkey == ord('a'):
-        print('change dataset')
-        filelist, dataName = getFileImages(1)
-    elif waitkey == ord('b'):
-        print('change dataset')
-        filelist, dataName = getFileImages(2)
-    elif waitkey == ord('c'):
-        print('change dataset')
-        filelist, dataName = getFileImages(3)
+    if waitkey != 255:
+        if waitkey  == ord('q'):
+            break
+        elif waitkey  == ord('l'):
+            print('change mode')
+            liveMode = not liveMode
+        elif waitkey == ord('1'):
+            print('change model')
+            model, labelEncoder, modelName = loadModel(1)
+        elif waitkey == ord('2'):
+            print('change model')
+            model, labelEncoder, modelName = loadModel(2)
+        elif waitkey == ord('3'):
+            print('change model')
+            model, labelEncoder, modelName = loadModel(3)
+        elif waitkey == ord('4'):
+            print('change model')
+            model, labelEncoder, modelName = loadModel(4)
+        elif waitkey == ord('a'):
+            print('change dataset')
+            filelist, dataName = getFileImages(1)
+        elif waitkey == ord('b'):
+            print('change dataset')
+            filelist, dataName = getFileImages(2)
+        elif waitkey == ord('c'):
+            print('change dataset')
+            filelist, dataName = getFileImages(3)
+        elif waitkey == ord(' '):
+            pause= True
+            while pause:
+                time.sleep(3.0)
+                waitkey = cv2.waitKey(1) & 0xFF
+                if waitkey == ord(' '):
+                    pause=False
 
 # When everything done, release the capture
 cap.release()
