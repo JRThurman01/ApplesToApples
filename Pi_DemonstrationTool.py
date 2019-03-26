@@ -1,5 +1,12 @@
 
+ISRASPBERRYPI=False
+
 print('Loading dependencies')
+
+if ISRASPBERRYPI:
+    from picamera.array import PiRGBArray
+    from picamera import PiCamera
+
 import numpy as np
 import cv2
 import pickle
@@ -133,7 +140,12 @@ def drawProbabilities(predictions, frame, label):
 def getImage(liveMode):
     if liveMode:
         time.sleep(0.1)
-        ret, frame = cap.read()
+        if ISRASPBERRYPI:
+            camera.capture(rawCapture, format="bgr")
+            frame = rawCapture.array
+        else:
+            ret, frame = cap.read()
+
         label = 'Streaming...'
         return frame, label
     else:
@@ -161,14 +173,20 @@ def getFileImages(id=1):
 
 #Set up camera and graphing tools
 print('Setting up imaging')
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
 
-#Load the model, start with number 1.
-liveMode = False
+if ISRASPBERRYPI:
+    camera = PiCamera()
+    rawCapture = PiRGBArray(camera)
+    liveMode = True
+else:
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
+    #Load the model, start with number 1.
+    liveMode = False
+    filelist, dataName = getFileImages(1)
 
-filelist, dataName = getFileImages(1)
+
 model, labelEncoder, modelName = loadModel(1)
 
 print('Predicting...')
