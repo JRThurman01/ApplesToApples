@@ -20,7 +20,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Lambda, Dropout
 
 #Set up global variables
-IMAGEHEIGHT = 600
+IMAGEHEIGHT = 800
 SCOREBOXWIDTH = 500
 BARCHARTLENGTH = SCOREBOXWIDTH-50
 BARCHARTTHICKNESS = 30
@@ -28,6 +28,7 @@ BARCHARTGAP = 25
 BARCHARTOFFSET = 8
 THRESHOLD=0.05
 FONT = cv2.FONT_HERSHEY_SIMPLEX
+IMAGEAVERAGING=5
 
 
 def createModel(outputshape, nodes=264):
@@ -62,34 +63,41 @@ def loadLabelEncoder(file):
 def loadModel(modelNumber):
     print('Loading model weights')
     if modelNumber == 1:
-        modelName = 'Model 1'
+        modelName = 'Fruit360 data model'
         size = 95
         model = createModel(size)
         model.load_weights('./saved_models/model3/weights.h5')
         return model, loadLabelEncoder("./labelEncoding.pkl"), modelName
 
     elif modelNumber == 2:
-        modelName = 'Model 2'
+        modelName = 'Flickr data model'
         size = 52
         model = createModel(size)
         model.load_weights('./saved_models/model5/weights.h5')
         return model, loadLabelEncoder("./labelEncodingFlickr.pkl"), modelName
 
     elif modelNumber == 3:
-        modelName = 'Model 3'
+        modelName = 'Flickr data subset'
         size = 11
         model = createModel(size)
         model.load_weights('./saved_models/model7/weights.h5')
         return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
 
     elif modelNumber == 4:
-        modelName = 'Model 4'
+        modelName = 'Flickr data subset, w/ Class imbalanece adjustment'
         size = 11
-        model = createModel(size, nodes=128)
-        model.load_weights('./saved_models/model8/weights.h5')
+        model = createModel(size)
+        model.load_weights('./saved_models/model9/weights.h5')
         return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
 
-def drawProbabilities(predictions, frame, label):
+def drawProbabilities(historic_predictions, frame, label,):
+
+    #Use average if using live mode, takes 5 frame average
+    if liveMode:
+        average_predictions = np.array(historic_predictions)
+        predictions = average_predictions.mean(axis=0)
+    else:
+        predictions = historic_predictions[-1]
 
     #resize frame
     height = IMAGEHEIGHT
@@ -118,15 +126,15 @@ def drawProbabilities(predictions, frame, label):
     start_pixels = np.array([20, 150])
     for i in range(4):
         probability = predictions[argmaxes[-1-i]]
-        probability = int(probability /0.05)*0.05 #rounding of the probability
-        if probability > THRESHOLD:
+        roundedprobability = round((probability /0.05),0)*0.05 #rounding of the probability
+        if roundedprobability >= THRESHOLD:
             predictedLabel = labels[-1-i]
             if predictedLabel == label:
                 colour = (40, 230, 40)
             else:
                 colour = (20,20,220)
 
-            text = '{}. {} ({}%)' .format(i+1, predictedLabel, round(probability*100,0))
+            text = '{}. {} ({}%)' .format(i+1, predictedLabel, round(roundedprobability*100,0))
             cv2.putText(score_frame ,text , tuple(start_pixels), FONT, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
             chart_start = start_pixels + np.array([0, BARCHARTOFFSET])
             length = int(probability * BARCHARTLENGTH)
@@ -170,7 +178,6 @@ def getFileImages(id=1):
 
     return glob.glob(url, recursive=True), dataName
 
-
 #Set up camera and graphing tools
 print('Setting up imaging')
 
@@ -184,10 +191,10 @@ else:
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
     #Load the model, start with number 1.
     liveMode = False
-    filelist, dataName = getFileImages(1)
+    filelist, dataName = getFileImages(3)
 
-
-model, labelEncoder, modelName = loadModel(1)
+model, labelEncoder, modelName = loadModel(3)
+historicpredictions=[]
 
 print('Predicting...')
 print('Press q to quit, l to toggle live mode')
@@ -199,39 +206,48 @@ while(True):
     small_frame = cv2.resize(frame, (100,100))
     small_frame = cv2.cvtColor(small_frame, cv2.COLOR_RGB2BGR)
 
-    #calculate predictions
+    #calculate predictions and store recent history
     predictions = model.predict(np.expand_dims(small_frame/255, axis=0))[0]
-    frame = drawProbabilities(predictions, frame, label)
-
+    historicpredictions.append(predictions)
+    historicpredictions = historicpredictions[-IMAGEAVERAGING:]
+    #print(len(historicpredictions))
+    frame = drawProbabilities(historicpredictions, frame, label)
     # Display the resulting frame
     cv2.imshow('frame', frame)
+
+    #Action based on any keys pressed
     waitkey = cv2.waitKey(1) & 0xFF
     if waitkey != 255:
         if waitkey  == ord('q'):
             break
         elif waitkey  == ord('l'):
-            print('change mode')
+            print('Toggling live mode')
             liveMode = not liveMode
+            historicpredictions = []
         elif waitkey == ord('1'):
-            print('change model')
+            print('Changing model')
+            historicpredictions = []
             model, labelEncoder, modelName = loadModel(1)
         elif waitkey == ord('2'):
-            print('change model')
+            print('Changing model')
+            historicpredictions = []
             model, labelEncoder, modelName = loadModel(2)
         elif waitkey == ord('3'):
-            print('change model')
+            print('Changing model')
+            historicpredictions = []
             model, labelEncoder, modelName = loadModel(3)
         elif waitkey == ord('4'):
-            print('change model')
+            print('Changing model')
+            historicpredictions = []
             model, labelEncoder, modelName = loadModel(4)
         elif waitkey == ord('a'):
-            print('change dataset')
+            print('Changing dataset')
             filelist, dataName = getFileImages(1)
         elif waitkey == ord('b'):
-            print('change dataset')
+            print('Changing dataset')
             filelist, dataName = getFileImages(2)
         elif waitkey == ord('c'):
-            print('change dataset')
+            print('Changing dataset')
             filelist, dataName = getFileImages(3)
         elif waitkey == ord(' '):
             pause= True
