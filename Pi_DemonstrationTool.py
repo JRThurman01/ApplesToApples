@@ -66,29 +66,23 @@ def loadModel(modelNumber):
         modelName = 'Fruit360 data model'
         size = 95
         model = createModel(size)
-        model.load_weights('./saved_models/model3/weights.h5')
-        return model, loadLabelEncoder("./labelEncoding.pkl"), modelName
+        model.load_weights('./saved_models/model4/weights.h5')
+        return model, loadLabelEncoder("./label_encoders/labelEncoding.pkl"), modelName
 
     elif modelNumber == 2:
         modelName = 'Flickr data model'
         size = 52
         model = createModel(size)
-        model.load_weights('./saved_models/model5/weights.h5')
-        return model, loadLabelEncoder("./labelEncodingFlickr.pkl"), modelName
+        model.load_weights('./saved_models/model7/weights.h5')
+        return model, loadLabelEncoder("./label_encoders/labelEncodingFlickr.pkl"), modelName
 
     elif modelNumber == 3:
         modelName = 'Flickr data subset'
         size = 11
         model = createModel(size)
-        model.load_weights('./saved_models/model7/weights.h5')
-        return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
+        model.load_weights('./saved_models/model11/weights.h5')
+        return model, loadLabelEncoder("./label_encoders/labelEncodingFlickrSubset.pkl"), modelName
 
-    elif modelNumber == 4:
-        modelName = 'Flickr data subset, w/ Class imbalanece adjustment'
-        size = 11
-        model = createModel(size)
-        model.load_weights('./saved_models/model9/weights.h5')
-        return model, loadLabelEncoder("./labelEncodingFlickrSubset.pkl"), modelName
 
 def drawProbabilities(historic_predictions, frame, label,):
 
