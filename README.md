@@ -16,5 +16,5 @@ https://drive.google.com/open?id=1-UJPLXEM7avZUFHLPRQtDogJPnGqNVKV
 * Capstone Project - Apples to apples.ipynb - A jupyter notebook detailing the EDA and modelling of the project
 * Pi_DemonstrationTool.py - A .py file that was used to demo the tool
 
-##Dependencies
+## Dependencies
 See attached document
