@@ -18,3 +18,6 @@ https://drive.google.com/open?id=1-UJPLXEM7avZUFHLPRQtDogJPnGqNVKV
 
 ## Dependencies
 See attached document
+
+## Results
+![alt text](./fruit_detection.gif)
